@@ -1,0 +1,5 @@
+bk_schema\common\mybatis\SqlSessionFactoryBeanExtention.class
+bk_schema\common\mybatis\SqlSessionFactoryBuilderExtention.class
+bk_schema\common\mybatis\xml\XMLConfigBuilderExtention.class
+bk_schema\commons\InvokeResult.class
+bk_schema\commons\MD5EncryptService.class

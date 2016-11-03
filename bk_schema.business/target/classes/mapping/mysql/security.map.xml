@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cr.security.dao.SecurityMapper">
+	<resultMap id="userMap" type="com.cr.usermanager.api.User">
+		<id property="id" column="id"/>
+		<result property="userAccount" column="user_account"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+		<result property="enabled" column="is_enabled"/>
+		<result property="email" column="email"/>
+		<result property="orgId" column="org_id"/>
+		<result property="lastLoginDate" column="last_login_date"/>
+		<result property="createDate" column="create_date"/>
+		<result property="remark" column="remark"/>
+	</resultMap>
+	<resultMap id="orgMap" type="com.cr.organization.api.Organization">
+		<id property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="independent" column="is_independent"/>
+		<result property="orgType" column="org_type"/>
+		<result property="path" column="path"/>
+		<result property="remark" column="remark"/>
+		<result property="orderNo" column="order_no"/>
+	</resultMap>
+	<resultMap id="resMap" type="com.cr.resourcemanager.api.Resource">
+		<id property="id" column="id"/>
+		<result property="funcId" column="func_id"/>
+		<result property="name" column="name"/>
+		<result property="description" column="description"/>
+		<result property="identifier" column="identifier"/>
+		<result property="menuIcon" column="menu_icon"/>
+		<result property="url" column="url"/>
+		<result property="category" column="category"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="orderNo" column="order_no"/>
+		<result property="enabled" column="enabled"/>
+	</resultMap>
+
+	<select id="findUser" resultMap="userMap">
+		SELECT *
+		FROM user
+		WHERE user_account = #{userAccount} AND is_delete = false;
+	</select>
+	<select id="findOrganization" resultMap="orgMap">
+		SELECT *
+		FROM organization
+		WHERE id = #{orgId} AND is_delete = false;
+	</select>
+	<select id="findUserAuth" resultMap="resMap">
+		SELECT DISTINCT *
+		FROM
+			(
+				SELECT r.*
+				FROM user u
+					INNER JOIN user_auth ua ON u.id = ua.user_id
+					INNER JOIN resource r ON r.id = ua.resource_id
+				WHERE u.user_account = #{userAccount}
+					  AND u.is_delete = FALSE
+					  AND enabled = TRUE
+					  AND r.category = #{type}
+				UNION ALL
+				SELECT r.*
+				FROM user u
+					INNER JOIN user_role ur ON u.id = ur.user_id
+					INNER JOIN role_auth ra ON ur.role_id = ra.role_id
+					INNER JOIN resource r ON r.id = ra.resource_id
+				WHERE u.user_account = #{userAccount}
+					  AND u.is_delete = FALSE
+					  AND enabled = TRUE
+					  AND r.category = #{type}
+			) auth order by order_no, update_date desc
+	</select>
+	<select id="findUserRoles" resultType="java.lang.String">
+		SELECT r.name
+		FROM role r
+			LEFT JOIN user_role ur ON r.id = ur.role_id
+			LEFT JOIN user u ON ur.user_id = u.id
+		WHERE u.user_account = #{userAccount};
+	</select>
+</mapper>

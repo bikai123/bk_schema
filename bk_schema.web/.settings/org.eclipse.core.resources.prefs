@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/bk_schema/organization/controller/OrganizationController.java=UTF-8
+encoding//src/main/java/bk_schema/role/controller/RoleController.java=UTF-8
+encoding//src/main/java/bk_schema/security/controller=GBK
+encoding//src/main/java/bk_schema/shiro=GBK
+encoding//src/main/java/bk_schema/user/controller/UserController.java=UTF-8
+encoding//src/main/resources/properties/global.properties=GBK
+encoding//src/main/resources/spring=UTF-8
+encoding//src/main/webapp/machine/machinesetting/jizushezhi/list.jsp=UTF-8

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bk_schema.organization.dao.OrganizationMapper">
+	<resultMap id="orgaizationMap" type="bk_schema.organization.api.Organization">
+		<id property="id" column="id"/>
+		<result property="code" column="code"/>
+		<result property="name" column="name"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="orgType" column="org_type"/>
+		<result property="path" column="path"/>
+		<result property="remark" column="remark"/>
+		<result property="orderNo" column="order_no"/>
+	</resultMap>
+	<insert id="addOrg">
+		INSERT INTO organization (
+			id,
+			code,
+			name,
+			parent_id,
+			org_type,
+			path,
+			remark,
+			order_no,
+			update_date)
+		VALUES
+			(
+				#{org.id},
+				#{org.code},
+				#{org.name},
+				#{org.parentId},
+				#{org.orgType},
+				#{org.path},
+				#{org.remark},
+				#{org.orderNo},
+				SYSDATETIME());
+	</insert>
+	<update id="deleteOrg">
+		UPDATE organization
+		SET is_delete = 1
+		WHERE id = #{id};
+	</update>
+	<update id="updateOrg">
+		UPDATE organization
+		SET
+			name           = #{org.name},
+			org_type       = #{org.orgType},
+			remark         = #{org.remark},
+			update_date    = SYSDATETIME()
+		WHERE id = #{id};
+	</update>
+	<select id="getOrg" resultMap="orgaizationMap">
+		SELECT *
+		FROM organization
+		WHERE id = #{id} AND is_delete = 0;
+	</select>
+	<select id="getMaxOrder" resultType="java.lang.Integer">
+		SELECT MAX(order_no)
+		FROM organization
+		WHERE parent_id = #{parentId};
+	</select>
+	<select id="getOrgs" resultMap="orgaizationMap">
+		SELECT *
+		FROM organization
+		WHERE is_delete = 0
+		<if test="orgId !=null and orgId !=''">
+			AND path LIKE ((SELECT path
+			FROM organization
+			WHERE id = #{orgId})+'%')
+		</if>
+		ORDER BY order_no, update_date;
+	</select>
+	<select id="getOrgCount" resultType="java.lang.Integer">
+		SELECT COUNT(1)
+		FROM organization
+		WHERE code = #{code};
+	</select>
+</mapper>

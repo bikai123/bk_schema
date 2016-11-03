@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+  <bean id="genericObjectPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+    <property name="maxTotal" value="${redis.maxActive}"></property>
+    <property name="maxIdle" value="${redis.maxIdle}"></property>
+    <property name="maxWaitMillis" value="${redis.maxWaitMillis}"></property>
+    <property name="testOnBorrow" value="${redis.testOnBorrow}"></property>        
+  </bean>
+  <bean id="jedisPool" class="redis.clients.jedis.ShardedJedisPool" scope="singleton">
+   <constructor-arg index="0" ref="genericObjectPoolConfig"></constructor-arg>
+   <constructor-arg index="1">
+   <list>
+   <bean  class="redis.clients.jedis.JedisShardInfo">
+   <constructor-arg name="host" value="${redis.host}"></constructor-arg>
+   <constructor-arg name="port" value="${redis.port}"></constructor-arg>
+   </bean>
+   </list>
+   </constructor-arg>
+  
+  </bean>
+  </beans>

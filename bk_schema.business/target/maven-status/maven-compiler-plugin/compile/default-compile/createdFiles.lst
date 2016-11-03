@@ -1,0 +1,16 @@
+bk_schema\machine\dao\ShebeiliebiaoMapper.class
+bk_schema\machine\dao\JizushezhiMapper.class
+bk_schema\user\business\UserServiceImpl.class
+bk_schema\role\business\RoleServiceImpl.class
+bk_schema\machine\business\ShebeifenleiServiceImpl.class
+bk_schema\machine\dao\ShebeifenleiMapper.class
+bk_schema\security\dao\SecurityMapper.class
+bk_schema\organization\dao\OrganizationMapper.class
+bk_schema\role\dao\RoleMapper.class
+bk_schema\resource\dao\ResourceMapper.class
+bk_schema\machine\business\ShebeiliebiaoImpl.class
+bk_schema\resource\business\ResourceServiceImpl.class
+bk_schema\machine\business\JizushezhiServiceImpl.class
+bk_schema\organization\business\OrganizationServiceImpl.class
+bk_schema\security\business\SecurityServiceImpl.class
+bk_schema\user\dao\UserMapper.class

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop.xsd 
+       http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+  <context:property-placeholder location="classpath:properties/global.properties"/>
+  <import resource="classpath:spring/security-shiro.xml"/>
+    <import resource="classpath:spring/spring-redis.xml"/>
+    <!-- 若调用dubbo consumer服务请注释 -->
+  <import resource="classpath*:spring/spring-mybatis.xml"/>
+  <!-- 不需要dubbo服务请注释掉 -->
+<!--   <import resource="classpath*:dubbo/dubbo-consumer.xml"/> -->
+<!--   <import resource="classpath*:dubbo/dubbo-provider.xml"/> -->
+</beans>

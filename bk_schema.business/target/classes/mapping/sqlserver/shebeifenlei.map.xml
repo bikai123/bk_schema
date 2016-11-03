@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bk_schema.machine.dao.ShebeifenleiMapper">
+
+<insert id="insertShebeifenlei" >
+insert into shebeifenlei values(
+ newid(),#{shebeifenlei.text},#{shebeifenlei.parent},#{shebeifenlei.opened}
+)
+</insert>
+<select id="getAllShebeifenlei"  resultType="bk_schema.machine.api.Shebeifenlei">
+select * from   shebeifenlei
+</select>
+<select id="getShebeifenleiById"  resultType="bk_schema.machine.api.Shebeifenlei">
+select * from   shebeifenlei where id=#{id}
+</select>
+
+<update id="updateShebeifenlei">
+  update shebeifenlei set text=#{shebeifenlei.text},parent=#{shebeifenlei.parent},
+  opened=#{shebeifenlei.opened} where id=#{shebeifenlei.id}
+</update>
+<delete id="deleteShebeifenlei">
+delete from shebeifenlei where id=#{id}
+</delete>
+<update id="moveShebeifenlei">
+update shebeifenlei set parent=#{parent} where id=#{id}
+</update>
+</mapper>

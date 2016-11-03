@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bk_schema.machine.dao.JizushezhiMapper">
+
+<insert id="insertJizushezhi">
+insert into jizushezhi values(
+  newid(),
+#{jizushezhi.bianhao},
+#{jizushezhi.mingcheng},
+#{jizushezhi.mingpai},
+#{jizushezhi.ranliao},
+#{jizushezhi.riqi},
+#{jizushezhi.leixing},
+#{jizushezhi.tingyong},
+#{jizushezhi.beizhu}
+)
+</insert>
+<select id="getAllJizushezhi"  resultType="bk_schema.machine.api.Jizushezhi">
+select * from   jizushezhi
+</select>
+<select id="getJizushezhiById"  resultType="bk_schema.machine.api.Jizushezhi">
+select * from   jizushezhi where guid=#{guid}
+</select>
+
+<select id="getJizushezhiBySomething"  resultType="bk_schema.machine.api.Jizushezhi">
+select * from jizushezhi where 1=1
+<if test="jizushezhi.guid !=null and jizushezhi.guid !=''">
+And guid=#{jizushezhi.guid} 
+</if><if test="jizushezhi.bianhao !=null and jizushezhi.bianhao !=''">
+And bianhao=#{jizushezhi.bianhao} 
+</if><if test="jizushezhi.mingcheng !=null and jizushezhi.mingcheng !=''">
+And mingcheng=#{jizushezhi.mingcheng} 
+</if><if test="jizushezhi.ranliao !=null and jizushezhi.ranliao !=''">
+And ranliao=#{jizushezhi.ranliao} 
+</if><if test="jizushezhi.leixing !=null and jizushezhi.leixing !=''">
+And leixing=#{jizushezhi.leixing} 
+</if>
+
+</select>
+<update id="updateJizushezhi">
+ update jizushezhi set bianhao=#{jizushezhi.bianhao},mingcheng=#{jizushezhi.mingcheng},mingpai=#{jizushezhi.mingpai},
+ ranliao=#{jizushezhi.ranliao},riqi=#{jizushezhi.riqi},leixing=#{jizushezhi.leixing},tingyong=#{jizushezhi.tingyong},
+ beizhu=#{jizushezhi.beizhu} where guid=#{jizushezhi.guid}
+</update>
+<delete id="deleteJizushezhi">
+delete from jizushezhi where guid=#{guid}
+</delete>
+<update id="tingyongJizushezhi">
+update jizushezhi set tingyong=#{tingyong}  where guid=#{guid}
+</update>
+</mapper>

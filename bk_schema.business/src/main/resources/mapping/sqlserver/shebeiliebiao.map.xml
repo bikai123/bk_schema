@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bk_schema.machine.dao.ShebeiliebiaoMapper">
+
+<insert id="insertShebeiliebiao" >
+insert into Shebeiliebiao values(
+ newid(),#{shebeiliebiao.bianma},#{shebeiliebiao.mingcheng},#{shebeiliebiao.fenlei},
+ #{shebeiliebiao.tingyong},#{shebeiliebiao.beizhu}
+)
+</insert>
+<select id="getAllShebeiliebiao"  resultType="bk_schema.machine.api.Shebeiliebiao">
+SELECT  a.[guid]
+      ,[bianma]
+      ,[mingcheng]
+      ,b.[text] as fenlei
+      ,[tingyong]
+      ,[beizhu]
+  FROM shebeiliebiao a
+  left join shebeifenlei b  on a.fenlei=b.id
+</select>
+<select id="getShebeiliebiaoById"  resultType="bk_schema.machine.api.Shebeiliebiao">
+SELECT  a.[guid]
+      ,[bianma]
+      ,[mingcheng]
+      ,b.[text] as fenlei
+      ,[tingyong]
+      ,[beizhu]
+  FROM shebeiliebiao a
+  left join shebeifenlei b  on a.fenlei=b.id 
+  where guid=#{guid}
+</select>
+<select id="getShebeiliebiaosByfenlei"  resultType="bk_schema.machine.api.Shebeiliebiao">
+SELECT  a.[guid]
+      ,[bianma]
+      ,[mingcheng]
+      ,b.[text] as fenlei
+      ,[tingyong]
+      ,[beizhu]
+  FROM shebeiliebiao a
+  left join shebeifenlei b  on a.fenlei=b.id  where  
+fenlei in (select id  from shebeifenlei where parent=#{fenlei}
+  union  select  #{fenlei})
+</select>
+<update id="updateShebeiliebiao">
+  update Shebeiliebiao set bianma=#{shebeiliebiao.bianma},mingcheng=#{shebeiliebiao.mingcheng},
+  fenlei=#{shebeiliebiao.fenlei} ,tingyong=#{shebeiliebiao.tingyong},beizhu=#{shebeiliebiao.beizhu}
+  where guid=#{shebeiliebiao.guid}
+</update>
+<delete id="deleteShebeiliebiao">
+delete from Shebeiliebiao where guid=#{guid}
+</delete>
+
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    	http://code.alibabatech.com/schema/dubbo  http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+  <dubbo:application name="bk_schema-consumer" owner="bk_schema" organization="bk_schema"/>
+  <dubbo:registry   address="${dubbo.registry.address}"></dubbo:registry>
+  <dubbo:protocol name="dubbo" serialization="kryo"></dubbo:protocol>
+  
+  <!--该模块需要调用的接口-->
+<dubbo:reference id="organizationService" interface="bk_schema.organization.api.OrganizationService"/>
+	<dubbo:reference id="resourceService" interface="bk_schema.resource.api.ResourceService"/>
+	<dubbo:reference id="roleService" interface="bk_schema.role.api.RoleService"/>
+	<dubbo:reference id="userService" interface="bk_schema.user.api.UserService"/>
+	<dubbo:reference id="authorityVerify" interface="bk_schema.security.api.SecurityService"/>
+</beans>
